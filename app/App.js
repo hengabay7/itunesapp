@@ -1,15 +1,19 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   View, Text, StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,ActivityIndicator,
 } from 'react-native';
 
 
 const App = () => {
 
 
+const [searchName,setSearchName]=useState('Search');
+const [isLoading,setIsloading]=useState(false);
+
+
   const doSomething = async () => {
-    const api = 'https://itunes.apple.com/search?term=metalica';
+    const api = 'https://itunes.apple.com/search?term=Omer+adam';
     const respones = await fetch(api, {
       method: 'get'
     });
@@ -19,9 +23,28 @@ const App = () => {
 
   return (
     <View style={myStyle.container}>
-      <TouchableOpacity style={myStyle.btn} onPress={doSomething}>
-        <Text style={myStyle.btntext}>clike me</Text>
-      </TouchableOpacity>
+      <View style={{height:'30%',flexDirection:'row'}}>
+       <View style={{width:'70%'}}>
+
+         </View>
+         <View style={{width:'30%'}}>
+         {
+        isLoading
+       ?( <ActivityIndicator size='large' color='#17B890' />)
+       :(
+          <TouchableOpacity style={myStyle.btn} onPress={doSomething}>
+            <Text style={myStyle.btntext}>{searchName}</Text>
+          </TouchableOpacity>
+        )
+      }
+     
+        
+         </View>
+      </View>
+      <View style={{height:'70%'}}>
+
+      </View>
+     
     </View>
   )
 }
@@ -30,16 +53,21 @@ const App = () => {
 
 const myStyle = StyleSheet.create({
   btn: {
-    width: '100%', paddingVertical: 14,
-    alignContent: 'center', backgroundColor: '#17B890',
-    borderRadius: 14
+    width:'100%', paddingVertical: 18,
+    alignItems: 'center', backgroundColor:'#17B890',
+    borderRadius: 14,
   },
 
-  btntext: { color: '#DEE5E5', fontSize: 22, fontWeight: '700' },
+  btntext: { 
+    color: '#DEE5E5',
+     fontSize: 24, 
+     fontWeight: '700'
+    },
 
   container: {
     flex: 1,
-    alignitmes: 'center',
+    padding:30,
+   alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#DEE5E5'
   }
